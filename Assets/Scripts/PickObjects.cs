@@ -60,10 +60,12 @@ public class PickObjects : MonoBehaviour
             if (rotationAmount >= 45 || rotationAmount <= -45)
             {
                 holdObject.transform.GetChild(0).gameObject.SetActive(true);
+                holdObject.GetComponent<ChampScript>().pourChamp = true;
             }
             else
             {
                 holdObject.transform.GetChild(0).gameObject.SetActive(false);
+                holdObject.GetComponent<ChampScript>().pourChamp = false;
             }
         }
     }

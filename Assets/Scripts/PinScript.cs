@@ -11,6 +11,7 @@ public class PinScript : MonoBehaviour
     [SerializeField] private GameObject pinCamera;
     [SerializeField] private GameObject player;
     private Player playerScript;
+    [SerializeField] private GameObject pinBoard;
 
     private void Awake()
     {
@@ -30,6 +31,7 @@ public class PinScript : MonoBehaviour
                     gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
                     pinCamera.SetActive(true);
                     mainCamera.SetActive(false);
+                    pinBoard.GetComponent<ReadPin>().pinMode = true;
                 }
             }
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -41,6 +43,7 @@ public class PinScript : MonoBehaviour
                     gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
                     mainCamera.SetActive(true);
                     pinCamera.SetActive(false);
+                    pinBoard.GetComponent<ReadPin>().pinMode = false;
                 }
             }
         }
