@@ -5,7 +5,7 @@ using UnityEngine;
 public class PinScript : MonoBehaviour
 {
 
-    private bool pinBool = false;
+    public bool enterPin = false;
     private bool pinModeBool = false;
     [SerializeField] private GameObject mainCamera;
     [SerializeField] private GameObject pinCamera;
@@ -20,32 +20,23 @@ public class PinScript : MonoBehaviour
 
     void Update()
     {
-        if (pinBool)
+
+        if (enterPin)
         {
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                if (pinModeBool == false)
-                {
-                    playerScript.playerMovement = false;
-                    pinModeBool = true;
-                    gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
-                    pinCamera.SetActive(true);
-                    mainCamera.SetActive(false);
-                    pinBoard.GetComponent<ReadPin>().pinMode = true;
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                if (pinModeBool == true)
-                {
-                    playerScript.playerMovement = true;
-                    pinModeBool = false;
-                    gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
-                    mainCamera.SetActive(true);
-                    pinCamera.SetActive(false);
-                    pinBoard.GetComponent<ReadPin>().pinMode = false;
-                }
-            }
+            playerScript.playerMovement = false;
+            gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+            pinCamera.SetActive(true);
+            mainCamera.SetActive(false);
+            pinBoard.GetComponent<ReadPin>().pinMode = true;
+        }
+        else
+        {
+            playerScript.playerMovement = true;
+            pinModeBool = false;
+            gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+            mainCamera.SetActive(true);
+            pinCamera.SetActive(false);
+            pinBoard.GetComponent<ReadPin>().pinMode = false;
         }
     }
 
@@ -59,21 +50,4 @@ public class PinScript : MonoBehaviour
         Debug.Log(Code);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
-            pinBool = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
-            pinBool = false;
-        }
-    }
 }

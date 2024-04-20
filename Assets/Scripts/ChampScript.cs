@@ -17,7 +17,6 @@ public class ChampScript : MonoBehaviour
             Debug.Log(glass.transform.GetChild(0).transform.localPosition.y);
             if (Vector2.Distance(pourVec, glassVec) <= 0.25f && glass.transform.GetChild(0).transform.localPosition.y <= 0.92f)
             {
-                Debug.Log("test");
                 glass.transform.GetChild(0).transform.localPosition += new Vector3(0, pourRiseSpeed * Time.deltaTime, 0);
             }
         }

@@ -82,7 +82,6 @@ public class ReadPin : MonoBehaviour
                         {
                             enteredPinColors[columnIndex] = '3';
                         }
-                        Debug.Log(enteredPinColors[0].ToString() + enteredPinColors[1].ToString() + enteredPinColors[2].ToString() + enteredPinColors[3].ToString());
                         columnIndex++;
                         break;
                     }
