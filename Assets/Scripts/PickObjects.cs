@@ -22,6 +22,7 @@ public class PickObjects : MonoBehaviour
     [SerializeField] private GameObject cupObject;
     [SerializeField] private GameObject cupPosObject;
     private Vector3 cupPos;
+    [SerializeField] private GameObject cameraObject;
 
     private void Awake()
     {
@@ -50,6 +51,7 @@ public class PickObjects : MonoBehaviour
                 {
                     if (rayObject.tag == "fruittag" || rayObject.tag == "clothestag" || rayObject.tag == "cuptag" || rayObject.tag == "champtag")
                     {
+                        GrabSound();
                         holdObject = rayObject;
                         holdObject.transform.GetComponent<Rigidbody>().isKinematic = true;
                         uiElement1.SetActive(false);
@@ -64,6 +66,7 @@ public class PickObjects : MonoBehaviour
             {
                 if (holdObject.tag == "cuptag")
                 {
+                    GrabSound();
                     Instantiate(cupObject, cupPos, Quaternion.identity);
                     fillBarObject.GetComponent<FillBar>().DecreaseFill(50f);
                     Destroy(holdObject);
@@ -71,6 +74,7 @@ public class PickObjects : MonoBehaviour
                 }
                 else if (putLaundry)
                 {
+                    GrabSound();
                     Destroy(holdObject);
                     holdingObject = false;
                 }
@@ -100,6 +104,7 @@ public class PickObjects : MonoBehaviour
                 holdObject.GetComponent<ChampScript>().pourChamp = false;
             }
         }
+
 
         //raycast
         Vector3 rayOrigin = new Vector3(0.5f, 0.5f, 0f);
@@ -165,6 +170,10 @@ public class PickObjects : MonoBehaviour
         }
     }
 
+    private void GrabSound()
+    {
+        cameraObject.GetComponent<AudioSource>().Play();
+    }
     private void RotateObject()
     {
         float rotateAngle = 90f;

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.InputSystem.Processors;
 using UnityEngine.TextCore.Text;
@@ -41,7 +40,6 @@ public class Player : MonoBehaviour
         transform.position += moveSpeed * transform.right * inputVector.x * Time.deltaTime;
 
         bool isWalking = inputVector != Vector2.zero;
-        Debug.Log(isWalking);
         if (isWalking)
         {
             if (!soundPlaying)

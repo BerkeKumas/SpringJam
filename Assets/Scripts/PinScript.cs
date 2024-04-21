@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 public class PinScript : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class PinScript : MonoBehaviour
     [SerializeField] private GameObject player;
     private Player playerScript;
     [SerializeField] private GameObject pinBoard;
-    [SerializeField] private AudioSource[] keySounds;
+    [SerializeField] private AudioClip[] keySounds;
 
     private void Awake()
     {
@@ -43,7 +44,8 @@ public class PinScript : MonoBehaviour
     public void PlayKeySound()
     {
         int rand = Random.Range(0, keySounds.Length);
-        keySounds[rand].Play();
+        gameObject.GetComponent<AudioSource>().clip = keySounds[rand];
+        gameObject.GetComponent<AudioSource>().Play();
 
     }
 

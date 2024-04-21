@@ -3,6 +3,7 @@ using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class TaskManager : MonoBehaviour
 {
@@ -64,6 +65,10 @@ public class TaskManager : MonoBehaviour
 
         if (musicTaskDone)
             CompleteTask(3);
+        if (isClothesTaskActive && wineTaskDone && fruitTaskDone && musicTaskDone)
+        {
+            SceneManager.LoadScene(2);
+        }
     }
 
     public void DestroyClothes(GameObject cloth)

@@ -18,6 +18,7 @@ public class ReadPin : MonoBehaviour
     public bool pinMode = true;
     [SerializeField] private GameObject[] Tiles;
     [SerializeField] private GameObject gameManager;
+    [SerializeField] private GameObject pinScriptObject;
 
     private void Awake()
     {
@@ -57,6 +58,7 @@ public class ReadPin : MonoBehaviour
                 {
                     if (Input.GetKeyDown(SUPPORTED_KEYS[i]))
                     {
+                        pinScriptObject.GetComponent<PinScript>().PlayKeySound();
                         tiles[columnIndex].SetLetter((char)SUPPORTED_KEYS[i]);
                         enteredPin += (char)SUPPORTED_KEYS[i];
                         UpdateEnteredPinColors(SUPPORTED_KEYS[i]);
