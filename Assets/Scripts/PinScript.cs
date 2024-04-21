@@ -12,6 +12,7 @@ public class PinScript : MonoBehaviour
     [SerializeField] private GameObject player;
     private Player playerScript;
     [SerializeField] private GameObject pinBoard;
+    [SerializeField] private AudioSource[] keySounds;
 
     private void Awake()
     {
@@ -33,21 +34,17 @@ public class PinScript : MonoBehaviour
         {
             playerScript.playerMovement = true;
             pinModeBool = false;
-            gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
             mainCamera.SetActive(true);
             pinCamera.SetActive(false);
             pinBoard.GetComponent<ReadPin>().pinMode = false;
         }
     }
 
-    private void EnterPinMode()
+    public void PlayKeySound()
     {
-        gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
-    }
+        int rand = Random.Range(0, keySounds.Length);
+        keySounds[rand].Play();
 
-    public void ReadPinCode(string Code)
-    {
-        Debug.Log(Code);
     }
 
 }

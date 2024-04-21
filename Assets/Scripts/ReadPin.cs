@@ -6,19 +6,18 @@ using UnityEngine.UI;
 
 public class ReadPin : MonoBehaviour
 {
-
-
-    private static readonly KeyCode[] SUPPORTED_KEYS = new KeyCode[] {
+    private static readonly KeyCode[] SUPPORTED_KEYS = {
         KeyCode.Alpha0, KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5,
         KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9
     };
 
-    private char[] pinCode = {'1', '2', '3', '4'};
-    private char[] enteredPinColors = {'0', '0', '0', '0'};
+    private char[] pinCode = { '0', '4', '2', '1', '2', '0', '2', '3' };
+    private char[] enteredPinColors = new char[8];
     private string enteredPin = "";
     private Tile[] tiles;
     public bool pinMode = true;
     [SerializeField] private GameObject[] Tiles;
+    [SerializeField] private GameObject gameManager;
 
     private void Awake()
     {
@@ -31,8 +30,9 @@ public class ReadPin : MonoBehaviour
     {
         if (pinMode)
         {
-            if (enteredPin.Length == 4)
+            if (enteredPin.Length == 8)
             {
+                CheckPinCompletion();
                 for (int i = 0; i < enteredPinColors.Length; i++)
                 {
                     switch (enteredPinColors[i])
@@ -51,7 +51,7 @@ public class ReadPin : MonoBehaviour
                     }
                 }
             }
-            if (enteredPin.Length <= 3)
+            if (enteredPin.Length <= 7)
             {
                 for (int i = 0; i < SUPPORTED_KEYS.Length; i++)
                 {
@@ -59,29 +59,7 @@ public class ReadPin : MonoBehaviour
                     {
                         tiles[columnIndex].SetLetter((char)SUPPORTED_KEYS[i]);
                         enteredPin += (char)SUPPORTED_KEYS[i];
-                        // 1 correct place of number
-                        // 2 numbers exist at another place
-                        // 3 number doesnt exist
-                        bool numberExist = false;
-                        foreach (char num in pinCode)
-                        {
-                            if (num == (char)SUPPORTED_KEYS[i])
-                            {
-                                numberExist = true;
-                            }
-                        }
-                        if (pinCode[columnIndex] == (char)SUPPORTED_KEYS[i])
-                        {
-                            enteredPinColors[columnIndex] = '1';
-                        }
-                        else if (numberExist)
-                        {
-                            enteredPinColors[columnIndex] = '2';
-                        }
-                        else
-                        {
-                            enteredPinColors[columnIndex] = '3';
-                        }
+                        UpdateEnteredPinColors(SUPPORTED_KEYS[i]);
                         columnIndex++;
                         break;
                     }
@@ -97,6 +75,32 @@ public class ReadPin : MonoBehaviour
                     enteredPin = enteredPin.Remove(enteredPin.Length - 1);
                 }
             }
+        }
+    }
+
+    private void CheckPinCompletion()
+    {
+        if (enteredPinColors.All(c => c == '1'))  // Tüm renkler yeþil ise
+        {
+            gameManager.GetComponent<TaskManager>().musicTaskDone = true;
+            gameObject.GetComponent<AudioSource>().Play();
+        }
+    }
+
+    private void UpdateEnteredPinColors(KeyCode key)
+    {
+        bool numberExist = pinCode.Contains((char)key);
+        if (pinCode[columnIndex] == (char)key)
+        {
+            enteredPinColors[columnIndex] = '1';
+        }
+        else if (numberExist)
+        {
+            enteredPinColors[columnIndex] = '2';
+        }
+        else
+        {
+            enteredPinColors[columnIndex] = '3';
         }
     }
 }

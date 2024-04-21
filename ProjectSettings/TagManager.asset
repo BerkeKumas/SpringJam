@@ -9,6 +9,8 @@ TagManager:
   - fruittag
   - cuptag
   - laptoptag
+  - champtag
+  - platetag
   layers:
   - Default
   - TransparentFX

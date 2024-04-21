@@ -11,10 +11,13 @@ public class Player : MonoBehaviour
     [SerializeField] float rotateSpeed = 1f;
     private PlayerInputActions playerInputActions;
     public bool playerMovement = true;
+    AudioSource walkingAudio;
+    private bool soundPlaying = false;
 
 
     private void Awake()
     {
+        walkingAudio = GetComponent<AudioSource>();
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
 
@@ -37,6 +40,20 @@ public class Player : MonoBehaviour
         transform.position += moveSpeed * transform.forward * inputVector.y * Time.deltaTime;
         transform.position += moveSpeed * transform.right * inputVector.x * Time.deltaTime;
 
-        //bool isWalking = moveDir != Vector3.zero;
+        bool isWalking = inputVector != Vector2.zero;
+        Debug.Log(isWalking);
+        if (isWalking)
+        {
+            if (!soundPlaying)
+            {
+                walkingAudio.Play();
+                soundPlaying = true;
+            }
+        }
+        else
+        {
+            walkingAudio.Stop();
+            soundPlaying = false;
+        }
     }
 }
